@@ -1,5 +1,6 @@
 package com.example.tweetsy.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +32,7 @@ import com.example.tweetsy.R
 import com.example.tweetsy.viewmodel.CategoryViewModel
 
 @Composable
-fun CategoryList(modifier: Modifier=Modifier){
+fun CategoryList(modifier: Modifier=Modifier,onClick : (category:String) -> Unit){
     val categoryViewModel : CategoryViewModel = hiltViewModel()
     val categories=categoryViewModel.category.collectAsState()
 
@@ -43,16 +44,19 @@ fun CategoryList(modifier: Modifier=Modifier){
         modifier = modifier
     ) {
         items(categories.value.distinct()) {
-            CategoryListItem(it)
+            CategoryListItem(it,onClick)
         }
     }
 }
 
 @Composable
-fun CategoryListItem(category:String){
+fun CategoryListItem(category:String,onClick: (category: String) -> Unit){
     Box(
         modifier = Modifier
             .size(160.dp)
+            .clickable {
+                onClick(category)
+            }
             .clip(RoundedCornerShape(20.dp))
             .paint(
                 painterResource(id = R.drawable.category_bg),

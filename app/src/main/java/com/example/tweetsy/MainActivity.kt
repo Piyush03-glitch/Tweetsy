@@ -12,6 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.tweetsy.api.TweetsAPI
 import com.example.tweetsy.screens.CategoryList
 import com.example.tweetsy.screens.TweetsList
@@ -27,8 +33,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TweetsyTheme {
-                Scaffold { innerPadding ->
-                    TweetsList(modifier = Modifier.padding(innerPadding))
+                App()
+            }
+        }
+    }
+
+    @Composable
+    private fun App() {
+        val navController = rememberNavController()
+
+        Scaffold { innerPadding -> // ✅ Get innerPadding from Scaffold
+            NavHost(
+                navController,
+                startDestination = "category",
+                modifier = Modifier.padding(innerPadding) // ✅ Apply padding to NavHost
+            ) {
+                composable("category") {
+                    CategoryList(modifier = Modifier.fillMaxSize()) { category ->
+                        navController.navigate("tweets/$category")
+                    }
+                }
+                composable(
+                    "tweets/{category}",
+                    arguments = listOf(navArgument("category") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
+                    TweetsList(modifier = Modifier.fillMaxSize())
                 }
             }
         }
