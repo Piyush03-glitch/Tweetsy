@@ -104,9 +104,6 @@ Value: tweets..category</code></pre>
 
 Now, **Tweetsy** will fetch tweets from your **custom API endpoint**, and you can test & modify it using **Postman**! 🚀<br>
 <br>
-
-<h3><b>📄 License</b></h3>
-MIT License. See <a href="LICENSE">LICENSE</a> for details.<br>
 <br>
 
 <h2 align="center">⭐ Like this project? Give it a star! 🌟</h2>
