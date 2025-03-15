@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,11 +27,19 @@ import com.example.tweetsy.viewmodel.TweetsViewModel
 @Composable
 fun TweetsList(modifier: Modifier=Modifier){
     val tweetsViewModel: TweetsViewModel= hiltViewModel()
-    val tweets=tweetsViewModel.tweets
-
-    LazyColumn(modifier=modifier) {
-        items(tweets.value){
-            TweetsListItem(text = it.tweet)
+    val tweets=tweetsViewModel.tweets.collectAsState()
+    if(tweets.value.isEmpty()){
+        Box(Modifier.fillMaxSize()){
+            Text("Loading...",
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
+    }
+    else{
+        LazyColumn(modifier=modifier) {
+            items(tweets.value){
+                TweetsListItem(text = it.tweet)
+            }
         }
     }
 }
