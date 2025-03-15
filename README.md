@@ -19,8 +19,8 @@
 
 <h3><b>📸 Screenshots</b></h3>
 <p align="center">
-  <img src="https://via.placeholder.com/200" width="200"> 
-  <img src="https://via.placeholder.com/200" width="200"> 
+  <img src="Screenshot_20250315_211913.png" width="200"> 
+  <img src="Screenshot_20250315_211931.png" width="200"> 
 </p>
 <br>
 
